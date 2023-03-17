@@ -2,7 +2,7 @@
 using MongoDB.Driver;
 using RudderstackForms.Models;
 
-namespace RudderstackForms.Services
+namespace RudderstackForms.Services.FormTemplates
 {
     public class FormTemplatesService
     {

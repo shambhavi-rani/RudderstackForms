@@ -1,15 +1,13 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using RudderstackForms.Models.FormInputs;
+﻿using RudderstackForms.Models.FormInputs;
 
 namespace RudderstackForms.Models
 {
-    public class FormTemplate
+    public class FormTemplateDTO
     {
         /// <summary>
         /// Source type of the form template
         /// Will be unique for each form
         /// </summary>
-        [BsonId]
         public string Type { get; set; } = null!;
 
         /// <summary>
@@ -17,6 +15,6 @@ namespace RudderstackForms.Models
         /// Key is field name
         /// value in object of type FormInput
         /// </summary>
-        public Dictionary<string, FormInput> Fields { get; set; } = null!;
+        public Dictionary<string, FormInputGeneric> Fields { get; set; } = null!;
     }
 }
