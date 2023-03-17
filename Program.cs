@@ -1,10 +1,13 @@
 using RudderstackForms.Models;
+using RudderstackForms.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<RudderstackDatabaseSettings>(
     builder.Configuration.GetSection("RudderstackDatabase"));
+
+builder.Services.AddSingleton<FormTemplatesService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
