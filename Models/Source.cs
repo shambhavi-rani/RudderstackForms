@@ -1,23 +1,27 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using RudderstackForms.Services.Sources;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace RudderstackForms.Models
 {
     public class Source
     {
         [BsonId]
-        public string Id { get; set; } = null!;
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
 
         [Required]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         [Required]
-        public Dictionary<string, object> UserData { get; set; }
+        public Dictionary<string, string>? UserData { get; set; }
 
-        public Source(string type, Dictionary<string, Object> userData)
+        /*public Source(string type, Dictionary<string, JsonElement> userDataFromJson)
         {
             Type = type;
-            UserData = userData;
-        }
+            UserData = SourceHelper.GetUserDataFromJson(userDataFromJson);
+        }*/
     }
 }
