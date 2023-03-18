@@ -24,6 +24,9 @@ namespace RudderstackForms.Services.FormTemplates
         public async Task<List<FormTemplate>> GetAsync() =>
             await _formTemplatesCollection.Find(_ => true).ToListAsync();
 
+        public async Task<List<string>> GetSourceTypesAsync() =>
+            await _formTemplatesCollection.Find(_ => true).Project(x => x.Type).ToListAsync();
+
         public async Task<FormTemplate?> GetAsync(string sourceType) =>
             await _formTemplatesCollection.Find(x => x.Type == sourceType).FirstOrDefaultAsync();
 

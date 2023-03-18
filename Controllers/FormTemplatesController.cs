@@ -16,14 +16,21 @@ namespace RudderstackForms.Controllers
         }
 
         [HttpGet]
-        public async Task<List<FormTemplate>> Get()
+        public async Task<List<FormTemplate>> GetAll()
         {
             return await _formTemplatesService.GetAsync();
         }
 
+        [HttpGet]
+        [Route("SourceTypes")]
+        public async Task<List<string>> GetAllSourceTypes()
+        {
+            return await _formTemplatesService.GetSourceTypesAsync();
+        }
+
         //TODO: add in readme that max sourceType length is 200
         [HttpGet("{sourceType}")]
-        public async Task<ActionResult<FormTemplate>> Get(string sourceType)
+        public async Task<ActionResult<FormTemplate>> GetBySourceType(string sourceType)
         {
             var formTemplate = await _formTemplatesService.GetAsync(sourceType);
 
@@ -36,7 +43,7 @@ namespace RudderstackForms.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(FormTemplateDTO formTemplateRequest)
+        public async Task<IActionResult> Create(FormTemplateDTO formTemplateRequest)
         {
             //TODO: validate request 
             //-> key does not exist in db currently
@@ -47,7 +54,7 @@ namespace RudderstackForms.Controllers
 
             await _formTemplatesService.CreateAsync(newFormTemplate);
 
-            return CreatedAtAction(nameof(Get), new {type = newFormTemplate.Type}, newFormTemplate);
+            return CreatedAtAction(nameof(GetAll), new {type = newFormTemplate.Type}, newFormTemplate);
         }
     }
 }
