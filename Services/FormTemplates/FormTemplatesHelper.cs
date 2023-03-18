@@ -1,10 +1,10 @@
 ﻿using Amazon.Auth.AccessControlPolicy;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using MongoDB.Bson;
+using RudderstackForms.Common;
+using RudderstackForms.Common.Exceptions;
 using RudderstackForms.Models;
 using RudderstackForms.Models.FormInputs;
-using RudderstackForms.Services.Sources;
 
 namespace RudderstackForms.Services.FormTemplates
 {
@@ -54,7 +54,7 @@ namespace RudderstackForms.Services.FormTemplates
                     return mapper.Map<FormInputGeneric, FormCheckboxInput>(genericInput);
                 default:
                     //TODO: create custom exceptions for better exception handling
-                    throw new ArgumentException();
+                    throw new InvalidFormInputException();
             }
         }
 
@@ -91,7 +91,7 @@ namespace RudderstackForms.Services.FormTemplates
             if(fieldsCount > Constants.FormTemplateFieldsCount)
             {
                 //TODO: custom exception
-                throw new InvalidDataException();
+                throw new MaxFormTemplateFieldsCountExceededException();
             }
         }
 
@@ -107,8 +107,7 @@ namespace RudderstackForms.Services.FormTemplates
             var formTemplate = TryGetSourceTypeFromDbAsync(sourceType).Result;
             if(formTemplate != null)
             {
-                //TODO: custom exception - key already exists in db
-                throw new InvalidDataException();
+                throw new SourceTypeAlreadyExistsException();
             }
         }
 
@@ -116,8 +115,7 @@ namespace RudderstackForms.Services.FormTemplates
         {
             if (sourceType.Length > Constants.SourceTypeMaxLength)
             {
-                //TODO: custom exception
-                throw new InvalidDataException();
+                throw new MaxSourceTypeLengthExceededException();
             }
         }
 

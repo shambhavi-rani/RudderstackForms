@@ -1,5 +1,7 @@
 ﻿using Amazon.Auth.AccessControlPolicy;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using RudderstackForms.Common;
+using RudderstackForms.Common.Exceptions;
 using RudderstackForms.Models;
 using RudderstackForms.Models.FormInputs;
 using RudderstackForms.Services.FormTemplates;
@@ -24,8 +26,7 @@ namespace RudderstackForms.Services.Sources
             var formTemplate = _formTemplatesHelper.TryGetSourceTypeFromDbAsync(newSource.Type).Result;
             if (formTemplate == null)
             {
-                //TODO: custom exception
-                throw new InvalidOperationException();
+                throw new SourceTypeNotFoundException();
             }
 
             ValidateSourceUserData(newSource.UserData, formTemplate.Fields);
@@ -58,7 +59,7 @@ namespace RudderstackForms.Services.Sources
         {
             if(!Constants.BooleanValueString.Any(x => x == userDataInput))
             {
-                throw new InvalidDataException();
+                throw new InvalidSourceCheckboxInputDataException();
             }
         }
 
@@ -66,7 +67,7 @@ namespace RudderstackForms.Services.Sources
         {
             if(!options.Any(x => x.Value == userDataInput))
             {
-                throw new InvalidDataException();
+                throw new InvalidSourceRadioInputDataException();
             }
         }
 
@@ -76,8 +77,7 @@ namespace RudderstackForms.Services.Sources
             {
                 if (!userData.ContainsKey(field.Key))
                 {
-                    //TODO: custom exception
-                    throw new InvalidDataException();
+                    throw new SourceUserDataMissingRequiredFormFields();
                 }
 
                 //TODO: Validate string vs bool input

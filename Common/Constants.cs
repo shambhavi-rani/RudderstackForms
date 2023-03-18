@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace RudderstackForms.Models
+namespace RudderstackForms.Common
 {
     public static class Constants
     {
@@ -11,8 +11,8 @@ namespace RudderstackForms.Models
 
         public const string SourceTypesRoute = "SourceTypes";
 
-        public static readonly IList<String> BooleanValueString = new ReadOnlyCollection<string>
-        (new List<String> {
+        public static readonly IList<string> BooleanValueString = new ReadOnlyCollection<string>
+        (new List<string> {
             "True",
             "true",
             "TRUE",
