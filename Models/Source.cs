@@ -15,6 +15,7 @@ namespace RudderstackForms.Models
         [Required]
         public string? Type { get; set; }
 
+        //TODO: change key type of dictionary to allow both string and boolean types
         [Required]
         public Dictionary<string, string>? UserData { get; set; }
 
