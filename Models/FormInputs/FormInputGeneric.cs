@@ -44,6 +44,9 @@ namespace RudderstackForms.Models.FormInputs
         /// </summary>
         public List<FormRadioInputOption>? Options { get; set; }
 
-        //TODO: not able to send options in radio input type field - fix this bug!
+        /// <summary>
+        /// CheckboxInput Selection: true/false
+        /// </summary>
+        public bool Selection { get; set; }
     }
 }

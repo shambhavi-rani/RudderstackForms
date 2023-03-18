@@ -21,7 +21,7 @@ namespace RudderstackForms.Controllers
             return await _formTemplatesService.GetAsync();
         }
 
-        //TODO: add in readme that max sourceType length is 100
+        //TODO: add in readme that max sourceType length is 200
         [HttpGet("{sourceType}")]
         public async Task<ActionResult<FormTemplate>> Get(string sourceType)
         {
@@ -41,7 +41,7 @@ namespace RudderstackForms.Controllers
             //TODO: validate request 
             //-> key does not exist in db currently
             //-> all fields have different keys
-            //-> sourceType length max 100
+            //-> sourceType length max 200
 
             var newFormTemplate = FormTemplatesHelper.GetFormTemplateFromFormTemplateDTO(formTemplateRequest);
 
