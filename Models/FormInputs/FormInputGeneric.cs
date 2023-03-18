@@ -42,7 +42,7 @@ namespace RudderstackForms.Models.FormInputs
         /// <summary>
         /// RadioInput Options
         /// </summary>
-        List<FormRadioInputOption>? Options { get; set; }
+        public List<FormRadioInputOption>? Options { get; set; }
 
         //TODO: not able to send options in radio input type field - fix this bug!
     }
