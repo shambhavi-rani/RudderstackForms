@@ -10,9 +10,12 @@ namespace RudderstackForms.Controllers
     {
         private readonly FormTemplatesService _formTemplatesService;
 
+        private readonly FormTemplatesHelper _formTemplatesHelper;
+
         public FormTemplatesController(FormTemplatesService formTemplatesService)
         {
             _formTemplatesService = formTemplatesService;
+            _formTemplatesHelper = new FormTemplatesHelper(formTemplatesService);
         }
 
         [HttpGet]
@@ -45,10 +48,7 @@ namespace RudderstackForms.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(FormTemplateDTO formTemplateRequest)
         {
-            //TODO: validate request 
-            //-> key does not exist in db currently
-            //-> all fields have different keys
-            //-> sourceType length max 200
+            _formTemplatesHelper.ValidateCreateFormTemplateRequest(formTemplateRequest);
 
             var newFormTemplate = FormTemplatesHelper.GetFormTemplateFromFormTemplateDTO(formTemplateRequest);
 

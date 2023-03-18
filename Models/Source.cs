@@ -13,16 +13,16 @@ namespace RudderstackForms.Models
         public string? Id { get; set; }
 
         [Required]
-        public string? Type { get; set; }
+        public string Type { get; set; }
 
         //TODO: change key type of dictionary to allow both string and boolean types
         [Required]
-        public Dictionary<string, string>? UserData { get; set; }
+        public Dictionary<string, string> UserData { get; set; }
 
-        /*public Source(string type, Dictionary<string, JsonElement> userDataFromJson)
+        public Source(string type, Dictionary<string, string> userData)
         {
             Type = type;
-            UserData = SourceHelper.GetUserDataFromJson(userDataFromJson);
-        }*/
+            UserData = userData;
+        }
     }
 }

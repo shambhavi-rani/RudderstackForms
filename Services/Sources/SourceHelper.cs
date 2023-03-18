@@ -1,59 +1,87 @@
-﻿using System.Text.Json;
+﻿using Amazon.Auth.AccessControlPolicy;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using RudderstackForms.Models;
+using RudderstackForms.Models.FormInputs;
+using RudderstackForms.Services.FormTemplates;
+using System.Text.Json;
 
 namespace RudderstackForms.Services.Sources
 {
-    public static class SourceHelper
+    public class SourceHelper
     {
-        public static Dictionary<string, object>? GetUserDataFromJson(Dictionary<string, JsonElement> userDataFromJson)
+        private readonly FormTemplatesHelper _formTemplatesHelper;
+
+        public SourceHelper(FormTemplatesService formTemplatesService)
         {
-            var processedUserData = new Dictionary<string, object>();
-
-            foreach (var dataEntryFromJson in userDataFromJson)
-            {
-                var dataEntryValue = GetDataEntryFromJson(dataEntryFromJson.Value);
-                processedUserData.Add(dataEntryFromJson.Key, dataEntryValue);
-            }
-
-            return processedUserData;
+            _formTemplatesHelper = new FormTemplatesHelper(formTemplatesService);
         }
 
-        private static object GetDataEntryFromJson(JsonElement jsonElement)
+        public void ValidateCreateSourceRequest(Source newSource)
         {
-            if (IsJsonElementBoolean(jsonElement))
+            //Validate create source request
+            //-> validate sourceType exists
+            //->validate source data according to template for sourceType
+            var formTemplate = _formTemplatesHelper.TryGetSourceTypeFromDbAsync(newSource.Type).Result;
+            if (formTemplate == null)
             {
-                return jsonElement.GetBoolean();
+                //TODO: custom exception
+                throw new InvalidOperationException();
             }
-            else if (IsJsonElementString(jsonElement))
+
+            ValidateSourceUserData(newSource.UserData, formTemplate.Fields);
+        }
+
+        private void ValidateSourceUserData(Dictionary<string, string> userData, Dictionary<string, FormInput> fields)
+        {
+            ValidateUserDataContainsAllFormTemplateFields(userData, fields);
+
+            ValidateUserDataWithField(userData, fields);
+        }
+
+        private void ValidateUserDataWithField(Dictionary<string, string> userData, Dictionary<string, FormInput> fields)
+        {
+            foreach (var field in fields)
             {
-                return GetStringFromJsonElement(jsonElement);
+                if(field.Value.Type == InputType.CheckBox)
+                {
+                    ValidateFieldForCheckboxInput(userData[field.Key]);
+                }
+                else if(field.Value.Type == InputType.Radio)
+                { 
+                    var radioTypeField = (FormRadioInput)field.Value;
+                    ValidateFieldForRadioInput(userData[field.Key], radioTypeField.Options);
+                }
             }
-            else
+        }
+
+        private void ValidateFieldForCheckboxInput(string userDataInput)
+        {
+            if(!Constants.BooleanValueString.Any(x => x == userDataInput))
             {
-                //TODO: create and throw custom exception instead of this ex
                 throw new InvalidDataException();
             }
         }
 
-        private static string GetStringFromJsonElement(JsonElement jsonElement)
+        private void ValidateFieldForRadioInput(string userDataInput, List<FormRadioInputOption> options)
         {
-            var stringData = jsonElement.GetString();
-            
-            if (stringData == null)
+            if(!options.Any(x => x.Value == userDataInput))
             {
-                //TODO: create and throw custom exception instead of this ex
                 throw new InvalidDataException();
             }
-            return stringData;
         }
 
-        private static bool IsJsonElementBoolean(JsonElement jsonElement)
+        private void ValidateUserDataContainsAllFormTemplateFields(Dictionary<string, string> userData, Dictionary<string, FormInput> fields)
         {
-            return jsonElement.ValueKind == JsonValueKind.True || jsonElement.ValueKind == JsonValueKind.False;
-        }
+            foreach (var field in fields)
+            {
+                if (!userData.ContainsKey(field.Key))
+                {
+                    //TODO: custom exception
+                    throw new InvalidDataException();
+                }
 
-        private static bool IsJsonElementString(JsonElement jsonElement)
-        {
-            return jsonElement.ValueKind == JsonValueKind.String;
+                //TODO: Validate string vs bool input
+            }
         }
     }
 }

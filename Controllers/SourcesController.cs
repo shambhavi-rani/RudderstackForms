@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RudderstackForms.Models;
+using RudderstackForms.Services.FormTemplates;
 using RudderstackForms.Services.Sources;
 
 namespace RudderstackForms.Controllers
@@ -10,9 +11,12 @@ namespace RudderstackForms.Controllers
     {
         private readonly SourcesService _sourcesService;
 
-        public SourcesController(SourcesService sourcesService)
+        private readonly SourceHelper _sourceHelper;
+
+        public SourcesController(SourcesService sourcesService, FormTemplatesService formTemplatesService)
         {
             _sourcesService = sourcesService;
+            _sourceHelper = new SourceHelper(formTemplatesService);
         }
 
         [HttpGet]
@@ -44,9 +48,7 @@ namespace RudderstackForms.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Source newSource)
         {
-            //TODO: validate request
-            //-> validate sourceType exists
-            //->validate source data according to template for sourceType
+            _sourceHelper.ValidateCreateSourceRequest(newSource);
 
             await _sourcesService.CreateAsync(newSource);
 
