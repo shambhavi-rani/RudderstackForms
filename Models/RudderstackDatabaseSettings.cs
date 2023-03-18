@@ -7,5 +7,7 @@
         public string DatabaseName { get; set; } = null!;
 
         public string FormTemplatesCollectionName { get; set; } = null!;
+
+        public string SourcesCollectionName { get; set; } = null!;
     }
 }
