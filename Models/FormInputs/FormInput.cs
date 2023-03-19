@@ -18,7 +18,9 @@ namespace RudderstackForms.Models.FormInputs
         /// <summary>
         /// Id fo object
         /// </summary>
-        /// TODO: see if want to update type to match sample config - create enum for inputType and map to InputType
+        /// 
+        /// TODO: update InputType to go as string/enum required by frontend
+        /// TODO: Add support for other input types
         [Required]
         public InputType Type { get; set; }
 
