@@ -4,7 +4,7 @@ using RudderstackForms.Models;
 
 namespace RudderstackForms.Services.FormTemplates
 {
-    public class FormTemplatesService: IService<FormTemplate>
+    public class FormTemplatesService: IFormTemplatesService
     {
         private readonly IMongoCollection<FormTemplate> _formTemplatesCollection;
 

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RudderstackForms", "RudderstackForms.csproj", "{D05B8ED3-00BC-4336-BD9D-FF3E5891E122}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rudderstack.Tests", "Rudderstack.Tests\Rudderstack.Tests.csproj", "{44550F38-004E-4874-88FF-55A0A964FD33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D05B8ED3-00BC-4336-BD9D-FF3E5891E122}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D05B8ED3-00BC-4336-BD9D-FF3E5891E122}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D05B8ED3-00BC-4336-BD9D-FF3E5891E122}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44550F38-004E-4874-88FF-55A0A964FD33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44550F38-004E-4874-88FF-55A0A964FD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44550F38-004E-4874-88FF-55A0A964FD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44550F38-004E-4874-88FF-55A0A964FD33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

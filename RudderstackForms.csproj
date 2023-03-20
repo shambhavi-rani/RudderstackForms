@@ -16,4 +16,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="Rudderstack.Tests\**" />
+    <Compile Remove="Rudderstack.Tests\**" />
+    <EmbeddedResource Remove="Rudderstack.Tests\**" />
+    <None Remove="Rudderstack.Tests\**" />
+  </ItemGroup>
+
 </Project>

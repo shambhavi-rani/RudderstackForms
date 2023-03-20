@@ -1,18 +1,20 @@
 ﻿using Amazon.Auth.AccessControlPolicy;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using RudderstackForms.Common;
 using RudderstackForms.Common.Exceptions;
 using RudderstackForms.Models;
 using RudderstackForms.Models.FormInputs;
+using System.Text.RegularExpressions;
 
 namespace RudderstackForms.Services.FormTemplates
 {
     public class FormTemplatesHelper
     {
-        private readonly FormTemplatesService _formTemplatesService;
+        private readonly IService<FormTemplate> _formTemplatesService;
 
-        public FormTemplatesHelper(FormTemplatesService formTemplatesService)
+        public FormTemplatesHelper(IService<FormTemplate> formTemplatesService)
         {
             _formTemplatesService = formTemplatesService;
         }
@@ -84,6 +86,45 @@ namespace RudderstackForms.Services.FormTemplates
         private void ValidateFields(Dictionary<string, FormInputGeneric> fields)
         {
             ValidateFieldsCount(fields.Count);
+
+            ValidateEachField(fields);
+        }
+
+        private void ValidateEachField(Dictionary<string, FormInputGeneric> fields)
+        {
+            foreach(var field in fields)
+            {
+                if(field.Value.Type == InputType.Text)
+                {
+                    ValidateIfValidRegexPattern(field.Value.Regex);
+                }
+            }
+        }
+
+        private void ValidateIfValidRegexPattern(string? pattern)
+        {
+            bool isValidRegex = true;
+
+            if (string.IsNullOrWhiteSpace(pattern))
+            {
+                isValidRegex = false;
+            }
+            else
+            {
+                try
+                {
+                    Regex.Match("", pattern);
+                }
+                catch (ArgumentException)
+                {
+                    isValidRegex = false;
+                }
+            }
+
+            if( !isValidRegex )
+            {
+                throw new InvalidRegexInCreateSourceException();
+            }
         }
 
         private void ValidateFieldsCount(int fieldsCount)

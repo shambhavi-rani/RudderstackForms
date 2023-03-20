@@ -9,11 +9,11 @@ namespace RudderstackForms.Controllers
     [Route("api/[controller]")]
     public class SourcesController: ControllerBase
     {
-        private readonly SourcesService _sourcesService;
+        private readonly ISourcesService _sourcesService;
 
         private readonly SourceHelper _sourceHelper;
 
-        public SourcesController(SourcesService sourcesService, FormTemplatesService formTemplatesService)
+        public SourcesController(ISourcesService sourcesService, IFormTemplatesService formTemplatesService)
         {
             _sourcesService = sourcesService;
             _sourceHelper = new SourceHelper(formTemplatesService);

@@ -13,7 +13,7 @@ namespace RudderstackForms.Services.Sources
     {
         private readonly FormTemplatesHelper _formTemplatesHelper;
 
-        public SourceHelper(FormTemplatesService formTemplatesService)
+        public SourceHelper(IFormTemplatesService formTemplatesService)
         {
             _formTemplatesHelper = new FormTemplatesHelper(formTemplatesService);
         }
@@ -75,7 +75,7 @@ namespace RudderstackForms.Services.Sources
         {
             foreach (var field in fields)
             {
-                if (!userData.ContainsKey(field.Key))
+                if (field.Value.Required && !userData.ContainsKey(field.Key))
                 {
                     throw new SourceUserDataMissingRequiredFormFields();
                 }

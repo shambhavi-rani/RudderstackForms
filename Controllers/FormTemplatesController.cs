@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RudderstackForms.Models;
+using RudderstackForms.Services;
 using RudderstackForms.Services.FormTemplates;
 
 namespace RudderstackForms.Controllers
@@ -8,11 +9,11 @@ namespace RudderstackForms.Controllers
     [Route("api/[controller]")]
     public class FormTemplatesController: ControllerBase
     {
-        private readonly FormTemplatesService _formTemplatesService;
+        private readonly IFormTemplatesService _formTemplatesService;
 
         private readonly FormTemplatesHelper _formTemplatesHelper;
 
-        public FormTemplatesController(FormTemplatesService formTemplatesService)
+        public FormTemplatesController(IFormTemplatesService formTemplatesService)
         {
             _formTemplatesService = formTemplatesService;
             _formTemplatesHelper = new FormTemplatesHelper(formTemplatesService);

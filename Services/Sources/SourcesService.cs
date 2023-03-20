@@ -4,7 +4,7 @@ using RudderstackForms.Models;
 
 namespace RudderstackForms.Services.Sources
 {
-    public class SourcesService: IService<Source>
+    public class SourcesService: ISourcesService
     {
         private readonly IMongoCollection<Source> _sourcesCollection;
 
