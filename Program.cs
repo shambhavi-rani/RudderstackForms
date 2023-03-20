@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<RudderstackDatabaseSettings>(
     builder.Configuration.GetSection("RudderstackDatabase"));
 
-builder.Services.AddSingleton<FormTemplatesService>();
-builder.Services.AddSingleton<SourcesService>();
+builder.Services.AddSingleton<IFormTemplatesService, FormTemplatesService>();
+builder.Services.AddSingleton<ISourcesService, SourcesService>();
 builder.Services.AddCors();
 
 builder.Services.AddControllers();
