@@ -1,6 +1,6 @@
 # RudderstackForms - Introduction
  
-This repository contains code for the RudderstackForms service which provides APIs to create different Form Templates and Sources based on those Form Templates. 
+This repository contains code for the RudderstackForms service which provides APIs to create different Form Templates and Sources based on those Form Templates. Link to frontend repo: [rudderstack-forms-frontend](https://github.com/shambhavi-rani/rudderstack-forms-frontend)
 
 ## Getting Started
 ### Prerequisites
@@ -37,7 +37,9 @@ db.FormTemplates.find().pretty()  or  db.Sources.find().pretty()
 0 -> Checkbox Input,
 3 -> Radio Input,
 4 -> Text Input
-2. FormTemplate.Type represents SourceType and should be unique for each formTemplate
+2. FormTemplate.Type represents SourceType and should be unique for each formTemplate.
+3. Max SourceType length allowed is 200.
+4. Max number of fields allowed is 1000.
 
 ### Some Details for creating Source
 1. Source.Type represents source type and must have a value that corresponds to an existing FormTemplate in DB. If no formTemplate with this sourceType exists in DB, create Source call will fail.
